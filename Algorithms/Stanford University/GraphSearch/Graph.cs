@@ -53,7 +53,7 @@ namespace Algorithms.GraphSearch {
             // Second Pass - Find leaders
             var leaders = new List<int>();
             for (var i = finishtimes.Count - 1; i >= 0; i--) {
-                var stack = new Stack<int>(new[] { finishtimes[i] });
+                var stack = new Stack<int>(finishtimes[i]);
                 while (stack.Count > 0) {
                     var key = stack.Pop();
                     if (!G[key].Flag)

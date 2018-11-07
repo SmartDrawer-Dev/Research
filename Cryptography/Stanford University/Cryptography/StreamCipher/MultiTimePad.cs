@@ -6,52 +6,45 @@ namespace Cryptography.StreamCipher
 {
     public class MultiTimePad
     {
-        private readonly List<byte[]> _ciphers;
-        private readonly int _length;
+        private readonly List<byte[]> ciphers = new List<byte[]>();
+        private readonly int records;
+        private readonly int streams;
 
-        public MultiTimePad(params byte[][] ciphers)
+        public MultiTimePad(params byte[][] data)
         {
-            _length = ciphers.Length;
-            _ciphers = new List<byte[]>(ciphers);
+            records = data[0].Length;
+            streams = data.Length;
 
-            for (var i = 0; i < _length - 1; i++)
-            for (var j = i + 1; j < _length; j++)
-            {
-                _ciphers.Add(ciphers[i].Select((m, n) => (byte)(m ^ ciphers[j][n])).ToArray());
-            }
+            for (var i = 0; i < data[0].Length; i++)
+                ciphers.Add(data.Select(j => j[i]).ToArray());            
         }
 
         public byte[] Decipher(int index)
         {
-            var key = ExtractKey();
-            return _ciphers[index].Select((i,j) => (byte)(i ^ key[j])).ToArray();
+            var ksp = KeySolutionSpace();
+            var vsp = ValueSolutionSpace(ksp);
+            var key = SemanticAnalysis(vsp);
+
+            return ciphers[index].Select((i,j) => (byte)(i ^ key[0][j])).ToArray();
         }
 
-        public byte[] ExtractKey(bool useGrammar = false)
+        private byte[][] KeySolutionSpace()
+            => ciphers.Select(i => Enumerable.Range(0, byte.MaxValue)
+                                                .Where(j => i.All(k => IsPrintableCharacter(j ^ k)))
+                                                .Select(j => (byte)j)
+                                                .ToArray()).ToArray();
+
+        private char[][][] ValueSolutionSpace(byte[][] ksp)
+            => ksp.Select((i, j) => i.Select(k => ciphers[j].Select(l => (char)(k ^ l))
+                                     .ToArray()).ToArray()).ToArray();
+
+        private static byte[][] SemanticAnalysis(char[][][] vsp)
         {
-            var key = new byte?[_ciphers.First().Length];
-
-            for (var i = 0; i < key.Length; i++)
-            {
-                // cycle through possible values
-                // https://crypto.stackexchange.com/questions/6020/how-to-attack-a-many-time-pad-based-on-what-happens-when-an-ascii-space-is-xor/6095#6095
-                // and calc key
-
-                var xorBytes = Enumerable.Range(0, _ciphers.Count).Select(j => _ciphers[j][i]);
-                var c = xorBytes.Count(j => char.IsLetter((char)j));
-            }
-
-            if (useGrammar)
-            {
-                PerformGrammarCorrection(ref key);
-            }
-
-            return Array.ConvertAll(key, i => i ?? 0);
+            // 38 is 1st correct value
+            return null;
         }
 
-        private void PerformGrammarCorrection(ref byte?[] key)
-        {
-
-        }
+        private static bool IsPrintableCharacter(int code)
+            => 32 <= code && code < 127;
     }
 }
