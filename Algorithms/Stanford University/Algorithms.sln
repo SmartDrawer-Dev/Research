@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms", "Algorithms.csproj", "{CA72CAC1-F664-4649-BA00-DCCAA3092550}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptography", "..\Cryptography\Cryptography.csproj", "{DCC575B2-54F1-40DC-9186-A938830C10A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{CA72CAC1-F664-4649-BA00-DCCAA3092550}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA72CAC1-F664-4649-BA00-DCCAA3092550}.Release|x64.ActiveCfg = Release|x64
 		{CA72CAC1-F664-4649-BA00-DCCAA3092550}.Release|x64.Build.0 = Release|x64
+		{DCC575B2-54F1-40DC-9186-A938830C10A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCC575B2-54F1-40DC-9186-A938830C10A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCC575B2-54F1-40DC-9186-A938830C10A9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DCC575B2-54F1-40DC-9186-A938830C10A9}.Debug|x64.Build.0 = Debug|Any CPU
+		{DCC575B2-54F1-40DC-9186-A938830C10A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCC575B2-54F1-40DC-9186-A938830C10A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCC575B2-54F1-40DC-9186-A938830C10A9}.Release|x64.ActiveCfg = Release|Any CPU
+		{DCC575B2-54F1-40DC-9186-A938830C10A9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
